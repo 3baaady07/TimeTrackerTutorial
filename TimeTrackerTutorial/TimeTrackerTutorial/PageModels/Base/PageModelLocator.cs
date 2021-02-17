@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TimeTrackerTutorial.Pages;
+using TimeTrackerTutorial.services.Account;
 using TimeTrackerTutorial.services.Navigation;
 using TinyIoC;
 using Xamarin.Forms;
@@ -28,6 +29,7 @@ namespace TimeTrackerTutorial.PageModels.Base
 
             // Register services (services are registered as Singletons default)
             _container.Register<INavigationService, NavigationService>();
+            _container.Register<IAccountService, AccountService>();
 
         }
 
