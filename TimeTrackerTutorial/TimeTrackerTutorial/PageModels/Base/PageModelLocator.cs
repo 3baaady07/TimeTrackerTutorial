@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using TimeTrackerTutorial.Pages;
-using TimeTrackerTutorial.services.Account;
-using TimeTrackerTutorial.services.Navigation;
+using TimeTrackerTutorial.Services.Account;
+using TimeTrackerTutorial.Services.Navigation;
 using TinyIoC;
 using Xamarin.Forms;
 

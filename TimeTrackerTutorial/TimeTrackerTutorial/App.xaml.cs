@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using TimeTrackerTutorial.PageModels;
 using TimeTrackerTutorial.PageModels.Base;
-using TimeTrackerTutorial.services.Navigation;
+using TimeTrackerTutorial.Services.Navigation;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

@@ -4,8 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TimeTrackerTutorial.PageModels.Base;
-using TimeTrackerTutorial.services.Account;
-using TimeTrackerTutorial.services.Navigation;
+using TimeTrackerTutorial.Services.Account;
+using TimeTrackerTutorial.Services.Navigation;
 using Xamarin.Forms;
 
 namespace TimeTrackerTutorial.PageModels

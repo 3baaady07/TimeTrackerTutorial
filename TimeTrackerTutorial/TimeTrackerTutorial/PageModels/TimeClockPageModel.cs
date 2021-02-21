@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using TimeTrackerTutorial.Models;
 using TimeTrackerTutorial.PageModels.Base;
+using TimeTrackerTutorial.ViewModels.Buttons;
 
 namespace TimeTrackerTutorial.PageModels
 {
     public class TimeClockPageModel : PageModelBase
     {
+        public TimeClockPageModel()
+        {
+            WorkItems = new ObservableCollection<WorkItem>();
+            ClockInOutButtonModel = new ButtonModel("Clock In", OnClockInOutAction);
+        }
+
         TimeSpan _runningTotal;
         public TimeSpan RunningTotal
         {
@@ -35,6 +43,24 @@ namespace TimeTrackerTutorial.PageModels
         {
             get => _todaysEarnings;
             set => SetProperty(ref _todaysEarnings, value);
+        }
+
+        ButtonModel _clockInOutButtonModel;
+        public ButtonModel ClockInOutButtonModel
+        {
+            get => _clockInOutButtonModel;
+            set => SetProperty(ref _clockInOutButtonModel, value);
+        }
+
+        public override Task InitializeAsync(object navigationData = null)
+        {
+            RunningTotal = new TimeSpan();
+            return base.InitializeAsync(navigationData);
+        }
+
+        private void OnClockInOutAction()
+        {
+
         }
     }
 }

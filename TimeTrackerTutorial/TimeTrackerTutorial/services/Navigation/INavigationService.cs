@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TimeTrackerTutorial.PageModels.Base;
 
-namespace TimeTrackerTutorial.services.Navigation
+namespace TimeTrackerTutorial.Services.Navigation
 {
     public interface INavigationService
     {
@@ -14,7 +15,8 @@ namespace TimeTrackerTutorial.services.Navigation
         /// <param name="navigationData"></param>
         /// <param name="setRoot"></param>
         /// <returns></returns>
-        Task NavigateToAsync<TPageModelBase>(object navigationData = null, bool setRoot = false);
+        Task NavigateToAsync<TPageModel>(object navigationData = null, bool setRoot = false) 
+            where TPageModel : PageModelBase;
         
         /// <summary>
         /// Navigation method to pop off the navigation stack
