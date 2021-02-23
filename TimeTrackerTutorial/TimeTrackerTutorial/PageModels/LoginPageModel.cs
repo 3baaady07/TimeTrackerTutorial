@@ -36,7 +36,6 @@ namespace TimeTrackerTutorial.PageModels
             set => SetProperty(ref _password, value);
         }
 
-
         public LoginPageModel(INavigationService navigationService, IAccountService accountService)
         {
             _navigationService = navigationService;
