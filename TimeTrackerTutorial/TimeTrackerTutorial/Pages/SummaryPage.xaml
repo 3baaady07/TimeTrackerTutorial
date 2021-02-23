@@ -4,9 +4,44 @@
              x:Class="TimeTrackerTutorial.Pages.SummaryPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <!-- This pay period overview -->
+            <Frame>
+                <StackLayout>
+                    <Label Text="Current Pay Period Estimate" />
+                    <Label Text="{Binding CurrentPayDateRange}" />
+                    <Label Text="{Binding CurrentPeriodEarnings, StringFormat='{}{0:C}'}" />
+                </StackLayout>
+            </Frame>
+            
+            <!-- Next Pay Date -->
+            <Frame>
+                <StackLayout>
+                    <Label Text="Payment Date for this Period" />
+                    <Label Text="{Binding CurrentPeriodPayDate, StringFormat='{}{0:MMMM d, yyyy}'}" />
+                </StackLayout>
+            </Frame>
+            
+            <!-- Previous Pay Statements -->
+            <Frame>
+                <StackLayout>
+                    <Label Text="Pay Statements" />
+                    <ListView ItemsSource="{Binding Statements}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Date}" 
+                                               HorizontalOptions="StartAndExpand" />
+                                        <Label Text="{Binding Earnings}" 
+                                               HorizontalOptions="End" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </Frame>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

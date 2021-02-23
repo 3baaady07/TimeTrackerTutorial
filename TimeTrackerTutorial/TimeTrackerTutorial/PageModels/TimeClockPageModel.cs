@@ -7,16 +7,17 @@ using System.Timers;
 using TimeTrackerTutorial.Models;
 using TimeTrackerTutorial.PageModels.Base;
 using TimeTrackerTutorial.Services.Account;
+using TimeTrackerTutorial.Services.Work;
 using TimeTrackerTutorial.ViewModels.Buttons;
 
 namespace TimeTrackerTutorial.PageModels
 {
     public class TimeClockPageModel : PageModelBase
     {
-        public TimeClockPageModel(IAccountService accountService)
+        public TimeClockPageModel(IAccountService accountService, IWorkService workService)
         {
             _accountService = accountService;
-            WorkItems = new ObservableCollection<WorkItem>();
+            _workService = workService;
             ClockInOutButtonModel = new ButtonModel("Clock In", OnClockInOutAction);
             _timer = new Timer();
             _timer.Interval = 1000;
@@ -33,10 +34,11 @@ namespace TimeTrackerTutorial.PageModels
         {
             RunningTotal = new TimeSpan();
             _hourlyRate = await _accountService.GetCurrentPayRateAsync();
+            WorkItems = await _workService.GetTodaysWorkAsync();
             await base.InitializeAsync(navigationData);
         }
 
-        private void OnClockInOutAction()
+        private async void OnClockInOutAction()
         {
             if (IsClockedIn)
             {
@@ -44,11 +46,13 @@ namespace TimeTrackerTutorial.PageModels
                 TodaysEarnings += _hourlyRate * RunningTotal.TotalHours;
                 RunningTotal = TimeSpan.Zero;
                 ClockInOutButtonModel.Text = "Clock In";
-                WorkItems.Insert(0, new WorkItem
+                var item = new WorkItem
                 {
                     Start = CurrentStartTime,
                     End = DateTime.Now
-                });
+                };
+                WorkItems.Insert(0, item);
+                await _workService.LogWorkAsync(item);
             }
             else
             {
@@ -103,6 +107,7 @@ namespace TimeTrackerTutorial.PageModels
 
         private Timer _timer;
         private IAccountService _accountService;
+        private IWorkService _workService;
         private double _hourlyRate;
     }
 }
