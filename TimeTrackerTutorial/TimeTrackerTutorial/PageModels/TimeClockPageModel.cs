@@ -3,25 +3,67 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using TimeTrackerTutorial.Models;
 using TimeTrackerTutorial.PageModels.Base;
+using TimeTrackerTutorial.Services.Account;
 using TimeTrackerTutorial.ViewModels.Buttons;
 
 namespace TimeTrackerTutorial.PageModels
 {
     public class TimeClockPageModel : PageModelBase
     {
+        public TimeClockPageModel(IAccountService accountService)
+        {
+            _accountService = accountService;
+            WorkItems = new ObservableCollection<WorkItem>();
+            ClockInOutButtonModel = new ButtonModel("Clock In", OnClockInOutAction);
+            _timer = new Timer();
+            _timer.Interval = 1000;
+            _timer.Enabled = false;
+            _timer.Elapsed += _timer_Elapsed;
+        }
+
+        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            RunningTotal += TimeSpan.FromSeconds(1);
+        }
+
+        public override async Task InitializeAsync(object navigationData = null)
+        {
+            RunningTotal = new TimeSpan();
+            _hourlyRate = await _accountService.GetCurrentPayRateAsync();
+            await base.InitializeAsync(navigationData);
+        }
+
+        private void OnClockInOutAction()
+        {
+            if (IsClockedIn)
+            {
+                _timer.Enabled = false;
+                TodaysEarnings += _hourlyRate * RunningTotal.TotalHours;
+                RunningTotal = TimeSpan.Zero;
+                ClockInOutButtonModel.Text = "Clock In";
+                WorkItems.Insert(0, new WorkItem
+                {
+                    Start = CurrentStartTime,
+                    End = DateTime.Now
+                });
+            }
+            else
+            {
+                CurrentStartTime = DateTime.Now;
+                _timer.Enabled = true;
+                ClockInOutButtonModel.Text = "Clock Out";
+            }
+            IsClockedIn = !IsClockedIn;
+        }
+        
         private bool _isClockedIn = false;
         public bool IsClockedIn 
         { 
             get => _isClockedIn; 
             set => SetProperty(ref _isClockedIn, value); 
-        }
-
-        public TimeClockPageModel()
-        {
-            WorkItems = new ObservableCollection<WorkItem>();
-            ClockInOutButtonModel = new ButtonModel("Clock In", OnClockInOutAction);
         }
 
         TimeSpan _runningTotal;
@@ -59,29 +101,8 @@ namespace TimeTrackerTutorial.PageModels
             set => SetProperty(ref _clockInOutButtonModel, value);
         }
 
-        public override Task InitializeAsync(object navigationData = null)
-        {
-            RunningTotal = new TimeSpan();
-            return base.InitializeAsync(navigationData);
-        }
-
-        private void OnClockInOutAction()
-        {
-            if (IsClockedIn)
-            {
-                ClockInOutButtonModel.Text = "Clock In";
-                WorkItems.Insert(0, new WorkItem
-                {
-                    Start = CurrentStartTime,
-                    End = DateTime.Now
-                });
-            }
-            else
-            {
-                CurrentStartTime = DateTime.Now;
-                ClockInOutButtonModel.Text = "Clock Out";
-            }
-            IsClockedIn = !IsClockedIn;
-        }
+        private Timer _timer;
+        private IAccountService _accountService;
+        private double _hourlyRate;
     }
 }
