@@ -12,9 +12,9 @@
                 <Label Text="{Binding RunningTotal, StringFormat='{}{0:h\\:mm\\:ss}'}" 
                        FontSize="50" HorizontalTextAlignment="Center"
                        TextColor="White"/>
-                <Label Text="{Binding CurrenStartTime, StringFormat='You clocked in at {0:h:mm tt}'}" 
-                       HorizontalTextAlignment="Center"
-                       TextColor="White" IsVisible="{Binding IsClockedIn}"/>
+                <Label Text="{Binding CurrentStartTime, StringFormat='You clocked in at {0:h:mm tt}'}" 
+                       HorizontalTextAlignment="Center" TextColor="White"
+                       IsVisible="{Binding IsClockedIn}"/>
                 <buttons:BindableButton BindingContext="{Binding ClockInOutButtonModel}" 
                                         HorizontalOptions="Center" 
                                         WidthRequest="200"
@@ -29,7 +29,7 @@
                 </StackLayout>
             </StackLayout>
             
-            <ListView ItemsSource="{Binding WorkItem}">
+            <ListView ItemsSource="{Binding WorkItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

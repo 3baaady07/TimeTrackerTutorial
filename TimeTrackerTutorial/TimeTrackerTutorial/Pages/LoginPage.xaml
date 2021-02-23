@@ -10,7 +10,7 @@
             <Entry Placeholder="username" Text="{Binding Username}" />
             <Entry Placeholder="password" Text="{Binding Password}" IsPassword="True"/>
             
-            <Button Text="Sign in" Command="{Binding SignInCommand}"/>
+            <Button Text="Sign in" Command="{Binding LoginCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

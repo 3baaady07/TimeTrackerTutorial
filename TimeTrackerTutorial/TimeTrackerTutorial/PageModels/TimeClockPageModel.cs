@@ -11,7 +11,7 @@ namespace TimeTrackerTutorial.PageModels
 {
     public class TimeClockPageModel : PageModelBase
     {
-        private bool _isClockedIn;
+        private bool _isClockedIn = false;
         public bool IsClockedIn 
         { 
             get => _isClockedIn; 
