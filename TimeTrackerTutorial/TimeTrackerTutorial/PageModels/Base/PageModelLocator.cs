@@ -5,6 +5,7 @@ using TimeTrackerTutorial.Pages;
 using TimeTrackerTutorial.Services.Account;
 using TimeTrackerTutorial.Services.Navigation;
 using TimeTrackerTutorial.Services.Statement;
+using TimeTrackerTutorial.Services.Work;
 using TinyIoC;
 using Xamarin.Forms;
 
@@ -21,7 +22,7 @@ namespace TimeTrackerTutorial.PageModels.Base
             _viewLookup = new Dictionary<Type, Type>();
 
             // Register pages and page models
-            Register<DashboardPageModel,DashboardPage>();
+            Register<DashboardPageModel, DashboardPage>();
             Register<LoginPageModel, LoginPage>();
             Register<ProfilePageModel, ProfilePage>();
             Register<SettingsPageModel, SettingsPage>();
@@ -29,9 +30,10 @@ namespace TimeTrackerTutorial.PageModels.Base
             Register<TimeClockPageModel, TimeClockPage>();
 
             // Register services (services are registered as Singletons default)
-            _container.Register<INavigationService, NavigationService>();
             _container.Register<IAccountService, MockAccountService>();
+            _container.Register<INavigationService, NavigationService>();
             _container.Register<IStatementService, MockStatementService>();
+            _container.Register<IWorkService, MockWorkService>();
 
         }
 
