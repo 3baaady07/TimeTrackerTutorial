@@ -5,7 +5,7 @@
              xmlns:labels="clr-namespace:TimeTrackerTutorial.Views.Labels"
              x:Class="TimeTrackerTutorial.Pages.SummaryPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="10">
             <!-- This pay period overview -->
             <Frame>
                 <StackLayout>

@@ -9,7 +9,7 @@
             <StackLayout Orientation="Horizontal">
                 <Label Text="{Binding Earnings}" HorizontalOptions="End" />
                 <StackLayout>
-                    <views:HoursProgressView Current="{Binding Total}" /> 
+                    <views:HoursProgressView Current="{Binding TotalHours}" /> 
                     <Label Text="{Binding PayRange}" />
                 </StackLayout>
             </StackLayout>
