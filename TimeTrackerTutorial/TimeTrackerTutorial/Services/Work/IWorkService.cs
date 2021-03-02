@@ -11,5 +11,6 @@ namespace TimeTrackerTutorial.Services.Work
     {
         Task<bool> LogWorkAsync(WorkItem item);
         Task<ObservableCollection<WorkItem>> GetTodaysWorkAsync();
+        Task<List<WorkItem>> GetWorkForThisPeriodAsync();
     }
 }

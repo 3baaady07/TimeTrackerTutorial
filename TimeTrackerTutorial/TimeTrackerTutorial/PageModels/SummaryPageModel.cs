@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeTrackerTutorial.Models;
 using TimeTrackerTutorial.PageModels.Base;
+using TimeTrackerTutorial.Services.Account;
 using TimeTrackerTutorial.Services.Statement;
+using TimeTrackerTutorial.Services.Work;
 using TimeTrackerTutorial.ViewModels;
 
 namespace TimeTrackerTutorial.PageModels
@@ -13,14 +15,21 @@ namespace TimeTrackerTutorial.PageModels
     public class SummaryPageModel : PageModelBase
     {
         private readonly IStatementService _statementService;
+        private readonly IWorkService _workService;
+        private readonly IAccountService _accountService;
+        private double _hourlyRate;
 
-        public SummaryPageModel(IStatementService statementService)
+        public SummaryPageModel(IStatementService statementService, IWorkService workService,
+            IAccountService accountService)
         {
+            _accountService = accountService;
             _statementService = statementService;
+            _workService = workService;
         }
 
-        public override async Task InitializeAsync(object navigationData = null)
+        public override async Task InitializeAsync(object navigationData = null )
         {
+            _hourlyRate = await _accountService.GetCurrentPayRateAsync();
             var statements = await _statementService.GetStatementHistoryAsync();
             if (statements != null)
             {
@@ -46,6 +55,11 @@ namespace TimeTrackerTutorial.PageModels
                         }
                     }
                 }
+            }
+            var currentPeriodItems = await _workService.GetWorkForThisPeriodAsync();
+            foreach (var item in currentPeriodItems)
+            {
+                CurrentPeriodEarnings += item.Total.TotalHours * _hourlyRate;
             }
             await base.InitializeAsync(navigationData);
         }
