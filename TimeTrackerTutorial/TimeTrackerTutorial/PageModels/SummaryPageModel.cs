@@ -51,7 +51,7 @@ namespace TimeTrackerTutorial.PageModels
                     {
                         if(currentEnd.AddDays(-13) < today)
                         {
-                            SetDateRange(currentEnd , currentEnd);
+                            SetDateRange(currentEnd.AddDays(-13), currentEnd);
                         }
                     }
                 }

@@ -48,23 +48,25 @@ namespace TimeTrackerTutorial.iOS.Renderers
             }
 
             var view = Element as HoursProgressView;
+            var currentProgressWidth = (view.Current - view.Min) / (view.Max - view.Min);
+
             var backgroundPath = new UIBezierPath();
             backgroundPath.MoveTo(new CoreGraphics.CGPoint(0, view.Height / 2));
             backgroundPath.AddLineTo(new CoreGraphics.CGPoint(view.Width, view.Height / 2));
             backgroundPath.LineWidth = 5;
+
             _backgroundLayer = new CAShapeLayer();
             _backgroundLayer.Path = backgroundPath.CGPath;
             _backgroundLayer.StrokeColor = UIColor.Gray.CGColor;
 
             Layer.AddSublayer(_backgroundLayer);
 
-            var currentProgressWidth = (view.Current - view.Min) / (view.Max - view.Min);
             var foregroundPath = new UIBezierPath();
             foregroundPath.MoveTo(new CoreGraphics.CGPoint(0, view.Height/2));
             foregroundPath.AddLineTo(new CoreGraphics.CGPoint(view.Width * currentProgressWidth, view.Height / 2));
+            foregroundPath.LineWidth = 5;
 
             _foregroundLayer = new CAShapeLayer();
-            foregroundPath.LineWidth = 5;
             _foregroundLayer.Path = foregroundPath.CGPath;
             _foregroundLayer.StrokeColor = UIColor.Blue.CGColor;
 
