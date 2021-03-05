@@ -57,7 +57,7 @@ namespace TimeTrackerTutorial.iOS.Renderers
 
             _backgroundLayer = new CAShapeLayer();
             _backgroundLayer.Path = backgroundPath.CGPath;
-            _backgroundLayer.StrokeColor = UIColor.Gray.CGColor;
+            _backgroundLayer.StrokeColor = view.BarColor.ToCGColor();
 
             Layer.AddSublayer(_backgroundLayer);
 
@@ -68,7 +68,7 @@ namespace TimeTrackerTutorial.iOS.Renderers
 
             _foregroundLayer = new CAShapeLayer();
             _foregroundLayer.Path = foregroundPath.CGPath;
-            _foregroundLayer.StrokeColor = UIColor.Blue.CGColor;
+            _foregroundLayer.StrokeColor = view.FillColor.ToCGColor();
 
             Layer.AddSublayer(_foregroundLayer);
         }
