@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "247284006843",
+    "project_id": "timetrackerapp-7b08e",
+    "storage_bucket": "timetrackerapp-7b08e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247284006843:android:55be2de08d87125599ce9e",
+        "android_client_info": {
+          "package_name": "com.Abdullah.timetrackertutorial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247284006843-tevjk6p9ethk5oj1jajjb30ati5ifl5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDblJAAwFD4T_EtH5rkzEIqpfxLdljvUao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247284006843-tevjk6p9ethk5oj1jajjb30ati5ifl5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
