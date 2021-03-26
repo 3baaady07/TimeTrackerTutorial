@@ -9,5 +9,6 @@ namespace TimeTrackerTutorial.Services.Account
     {
         Task<bool> LoginAsync(string username, string password);
         Task<double> GetCurrentPayRateAsync();
+        Task<bool> SendOtpCodeAsync(string phoneNumber);
     }
 }

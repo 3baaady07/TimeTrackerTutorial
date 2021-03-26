@@ -23,5 +23,10 @@ namespace TimeTrackerTutorial.Services.Account
                 return Task.Delay(1000).ContinueWith((task) => true);
             }
         }
+
+        public Task<bool> SendOtpCodeAsync(string phoneNumber)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

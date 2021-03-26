@@ -33,6 +33,11 @@ namespace TimeTrackerTutorial.Droid.Services
             return tcs.Task;
         }
 
+        public Task<bool> SendOtpCodeAsync(string phoneNumber)
+        {
+            throw new NotImplementedException();
+        }
+
         private void OnAuthCompleted(Task task, TaskCompletionSource<bool> tcs)
         {
             if (task.IsCanceled || task.IsFaulted)

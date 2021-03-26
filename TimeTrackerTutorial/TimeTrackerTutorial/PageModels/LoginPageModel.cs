@@ -6,61 +6,60 @@ using System.Windows.Input;
 using TimeTrackerTutorial.PageModels.Base;
 using TimeTrackerTutorial.Services.Account;
 using TimeTrackerTutorial.Services.Navigation;
+using TimeTrackerTutorial.ViewModels;
 using Xamarin.Forms;
 
 namespace TimeTrackerTutorial.PageModels
 {
     public class LoginPageModel : PageModelBase
     {
-        private ICommand _signInCommand;
+        private string _icon;
+        public string Icon 
+        { 
+            get => _icon; 
+            set => SetProperty(ref _icon, value); 
+        }
+
+        private LoginOptionViewModel _loginEmailViewModel;
+        public LoginOptionViewModel LoginEmailViewModel
+        {
+            get => _loginEmailViewModel;
+            set => SetProperty(ref _loginEmailViewModel, value);
+        }
+
+        private LoginOptionViewModel _loginPhoneViewModel;
+        public LoginOptionViewModel LoginPhoneViewModel
+        {
+            get => _loginPhoneViewModel;
+            set => SetProperty(ref _loginPhoneViewModel, value);
+        }
+
         private INavigationService _navigationService;
-        private IAccountService _accountService;
-        private string _username;
-        private string _password;
 
-        public ICommand LoginCommand
-        {
-            get => _signInCommand;
-            set => SetProperty(ref _signInCommand, value);
-        }
-        
-        public string Username
-        {
-            get => _username;
-            set => SetProperty(ref _username, value);
-        }
-
-        public string Password
-        {
-            get => _password;
-            set => SetProperty(ref _password, value);
-        }
-
-        public LoginPageModel(INavigationService navigationService, IAccountService accountService)
+        public LoginPageModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            _accountService = accountService;
+            LoginPhoneViewModel = new LoginOptionViewModel(
+                "Sign in with phone",
+                GoToPhoneLogin,
+                Color.FromHex("#02bd7e")
+                );
 
-            // Init our login command
-            LoginCommand = new Command(DoLoginAction);
+            LoginEmailViewModel = new LoginOptionViewModel(
+                "Sign in with email",
+                GoToEmailLogin,
+                Color.FromHex("#db4437")
+                );
         }
 
-        /// <summary>
-        /// Perform login validation and navigation if applicable
-        /// </summary>
-        /// <param name="obj"></param>
-        private async void DoLoginAction(object obj)
+        private void GoToEmailLogin()
         {
-            bool loginAttempt = await _accountService.LoginAsync(Username, Password);
+            _navigationService.NavigateToAsync<LoginEmailPageModel>();
+        }
 
-            if (loginAttempt)
-            {
-                await _navigationService.NavigateToAsync<DashboardPageModel>();
-            }
-            else
-            {
-                //TODO: Display an alert for faliure
-            }
+        private void GoToPhoneLogin()
+        {
+            _navigationService.NavigateToAsync<LoginPhonePageModel>();
         }
     }
 
