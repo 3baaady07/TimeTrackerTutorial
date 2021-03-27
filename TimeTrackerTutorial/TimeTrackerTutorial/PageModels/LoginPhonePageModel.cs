@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Input;
 using TimeTrackerTutorial.PageModels.Base;
 using TimeTrackerTutorial.Services.Account;
+using TimeTrackerTutorial.Services.Navigation;
 using Xamarin.Forms;
 
 namespace TimeTrackerTutorial.PageModels
@@ -40,6 +41,7 @@ namespace TimeTrackerTutorial.PageModels
 
         private ICommand _nextCommand;
         private bool _codeRequested;
+        private readonly INavigationService _navigationService;
 
         public ICommand NextCommand
         {
@@ -48,24 +50,39 @@ namespace TimeTrackerTutorial.PageModels
         }
         public IAccountService _accountService { get; }
 
-        public LoginPhonePageModel(IAccountService accountService)
+        public LoginPhonePageModel(IAccountService accountService, 
+            INavigationService navigationService)
         {
             _accountService = accountService;
+            _navigationService = navigationService;
             NextCommand = new Command(OnNextAction);
         }
 
-        private void OnNextAction(object obj)
+        private async void OnNextAction(object obj)
         {
             if (_codeRequested)
             {
                 // verify code that user entered
+                var loginAttempt = await _accountService.VerifyOtpCodeAsync(Code);
+                if (loginAttempt)
+                {
+                    await _navigationService.NavigateToAsync<DashboardPageModel>(null, true);
+                }
+                else
+                {
+                    // Something went wrong
+                    // TODO: Alert via Dialog Service.
+                }
             }
             else
             {
+                CodeSent = await _accountService.SendOtpCodeAsync(PhoneNumber);
+                
+                if (!CodeSent)
+                    return;
+                
                 _codeRequested = true;
                 ButtonText = "Verify Code";
-                CodeSent = true;
-                _accountService.SendOtpCodeAsync(PhoneNumber);
             }
         }
     }

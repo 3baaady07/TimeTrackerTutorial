@@ -28,5 +28,10 @@ namespace TimeTrackerTutorial.Services.Account
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> VerifyOtpCodeAsync(string code)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

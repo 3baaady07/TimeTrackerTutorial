@@ -7,7 +7,7 @@
              CornerRadius="2" BackgroundColor="{Binding BackgroundColour}"
              Margin="20,3" Padding="0">
             <Frame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding TapCommand}" />
+                <TapGestureRecognizer Command="{Binding TabCommand}" />
             </Frame.GestureRecognizers>
             <StackLayout Orientation="Horizontal" Margin="16,8">
                 <Image Source="{Binding Icon}" WidthRequest="20" 
